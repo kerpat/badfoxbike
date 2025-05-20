@@ -141,17 +141,21 @@ const addTouchEventsForSliders = () => {
 
 // Animate elements when they come into view
 const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.service-card, .advantage-card, .price-card, .review-card');
+    // Расширяем список элементов для анимации
+    const elements = document.querySelectorAll('.service-card, .advantage-card, .price-card, .review-card, .hero-logo, .hero h1, .hero .tagline, .hero-buttons > a, .services h2, .pricing h2, .advantages h2, .reviews h2, .contact h2, .contact-item, .footer-logo, .footer-links a');
     
-    elements.forEach(element => {
+    elements.forEach((element, index) => {
         const elementPosition = element.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.2;
+        const screenPosition = window.innerHeight / 1.2; // Порог срабатывания анимации
         
         if (elementPosition < screenPosition) {
-            element.style.opacity = '1';
-            element.style.transform = element.classList.contains('price-card') && element.classList.contains('popular') 
-                ? 'translateY(-10px) scale(1.05)' 
-                : 'translateY(0)';
+            // Добавляем небольшую задержку для каждого элемента для каскадного эффекта
+            const delay = element.closest('.hero-buttons') || element.closest('.footer-links') ? 0 : Math.min(index * 100, 500); 
+            setTimeout(() => {
+                element.style.opacity = '1';
+                // Убираем scale(1.05) для .price-card.popular из JS, так как оно теперь в CSS hover
+                element.style.transform = 'translateY(0)'; 
+            }, delay);
         }
     });
 };
@@ -160,25 +164,39 @@ window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', () => {
     animateOnScroll();
     addTouchEventsForSliders();
+    // Запускаем эффект пишущей машинки при загрузке
+    typewriterEffect(".hero .tagline", "Новые велосипеды! (весна 2025 г.)", 70);
 });
 
-// Add animation styles
-const style = document.createElement('style');
-style.innerHTML = `
-    .service-card, .advantage-card, .price-card, .review-card {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+// Эффект "пишущей машинки"
+function typewriterEffect(selector, text, speed) {
+    const element = document.querySelector(selector);
+    if (!element) return;
+    element.textContent = ''; // Очищаем текст перед началом
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
     }
-    
-    .price-card.popular {
-        transform: translateY(20px);
-    }
-    
+    // Добавляем небольшую задержку перед началом печати, чтобы другие анимации успели стартовать
+    setTimeout(type, 700); 
+}
+
+// Новый блок стилей, который может понадобиться для JS-управляемых вещей,
+// например, если решим скрывать текст для пишущей машинки изначально
+const dynamicStyle = document.createElement('style');
+dynamicStyle.innerHTML = `
+    .hero .tagline {
+        opacity: 0; /* Изначально скрываем для эффекта пишущей машинки */
+        min-height: 1.2em; /* Резервируем место, чтобы не было скачка */
+    } 
     @media (max-width: 768px) {
         body.menu-open {
             overflow: hidden;
         }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(dynamicStyle); 
