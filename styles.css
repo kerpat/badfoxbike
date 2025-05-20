@@ -312,9 +312,6 @@ nav {
     box-shadow: var(--box-shadow);
     transition: var(--transition);
     border: 1px solid #333;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .service-card:hover {
@@ -359,9 +356,6 @@ nav {
     transition: var(--transition);
     position: relative;
     border: 2px solid #333;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .price-card:hover {
@@ -371,7 +365,7 @@ nav {
 
 .price-card.popular {
     border-color: var(--primary-color);
-    transform: translateY(30px);
+    transform: translateY(-10px) scale(1.05);
 }
 
 .popular-tag {
@@ -463,9 +457,6 @@ nav {
     border-radius: var(--border-radius);
     transition: var(--transition);
     border: 1px solid #333;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .advantage-card:hover {
@@ -480,6 +471,11 @@ nav {
     transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
+.advantage-card:hover .advantage-icon {
+    transform: scale(1.2) rotate(10deg);
+    color: var(--primary-hover);
+}
+
 .advantage-card h3 {
     margin-bottom: 1rem;
     font-size: 1.3rem;
@@ -488,11 +484,6 @@ nav {
 
 .advantage-card p {
     color: #CCC;
-}
-
-.advantage-card:hover .advantage-icon {
-    transform: scale(1.2) rotate(10deg);
-    color: var(--primary-hover);
 }
 
 /* Reviews Section */
@@ -523,9 +514,6 @@ nav {
     box-shadow: var(--box-shadow);
     text-align: left;
     border: 1px solid #333;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .review-header {
@@ -924,3 +912,14 @@ footer {
         font-size: 2rem;
     }
 } 
+
+/* Улучшенная анимация появления элементов */
+.service-card, .advantage-card, .price-card, .review-card, .hero-logo, .hero h1, .hero .tagline, .hero-buttons > a {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.price-card.popular {
+    transform: translateY(30px);
+}

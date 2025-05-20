@@ -199,4 +199,4 @@ dynamicStyle.innerHTML = `
         }
     }
 `;
-document.head.appendChild(dynamicStyle); 
+document.head.appendChild(dynamicStyle);
