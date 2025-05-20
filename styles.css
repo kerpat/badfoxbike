@@ -20,8 +20,6 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    position: relative;
-    width: 100%;
 }
 
 body {
@@ -29,9 +27,6 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--secondary-color);
-    overflow-x: hidden;
-    position: relative;
-    width: 100%;
 }
 
 a {
@@ -146,7 +141,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
+    padding: 8px 0;
 }
 
 .logo {
@@ -648,7 +643,7 @@ footer {
     }
     
     nav {
-        padding: 12px 0;
+        padding: 8px 0;
     }
     
     .logo {
