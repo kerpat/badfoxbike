@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mobile Navigation
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
     
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function() {
             this.classList.toggle('active');
             navLinks.classList.toggle('active');
+            body.classList.toggle('menu-open'); // Prevent scrolling when menu is open
         });
         
         // Close menu when clicking on nav links
@@ -14,7 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                body.classList.remove('menu-open');
             });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                body.classList.remove('menu-open');
+            }
         });
     }
     
@@ -35,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Smooth scrolling for anchor links
+    // Improved Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -46,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(targetId);
             if (!targetElement) return;
             
-            const headerOffset = 80;
+            // Increased header offset for mobile
+            const headerOffset = window.innerWidth <= 768 ? 100 : 80;
             const elementPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
             
@@ -76,6 +91,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Add mobile touch events for sliders
+const addTouchEventsForSliders = () => {
+    const sliders = document.querySelectorAll('.reviews-slider');
+    
+    sliders.forEach(slider => {
+        let startX, startY, dist, threshold = 150;
+        let allowedTime = 300;
+        let elapsedTime;
+        let startTime;
+        
+        slider.addEventListener('touchstart', function(e) {
+            const touchobj = e.changedTouches[0];
+            startX = touchobj.pageX;
+            startY = touchobj.pageY;
+            startTime = new Date().getTime();
+            e.preventDefault();
+        }, false);
+        
+        slider.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, false);
+        
+        slider.addEventListener('touchend', function(e) {
+            const touchobj = e.changedTouches[0];
+            dist = touchobj.pageX - startX;
+            elapsedTime = new Date().getTime() - startTime;
+            
+            const horizontalDist = Math.abs(touchobj.pageX - startX);
+            const verticalDist = Math.abs(touchobj.pageY - startY);
+            
+            // Check if swipe is horizontal
+            if (horizontalDist >= verticalDist) {
+                if (elapsedTime <= allowedTime) {
+                    if (dist < -threshold) {
+                        // Swipe left, go to next slide
+                        const cardWidth = document.querySelector('.review-card').offsetWidth + 32;
+                        slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    } else if (dist > threshold) {
+                        // Swipe right, go to previous slide
+                        const cardWidth = document.querySelector('.review-card').offsetWidth + 32;
+                        slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    }
+                }
+            }
+        }, false);
+    });
+};
+
 // Animate elements when they come into view
 const animateOnScroll = () => {
     const elements = document.querySelectorAll('.service-card, .advantage-card, .price-card, .review-card');
@@ -94,7 +157,10 @@ const animateOnScroll = () => {
 };
 
 window.addEventListener('scroll', animateOnScroll);
-window.addEventListener('load', animateOnScroll);
+window.addEventListener('load', () => {
+    animateOnScroll();
+    addTouchEventsForSliders();
+});
 
 // Add animation styles
 const style = document.createElement('style');
@@ -107,6 +173,12 @@ style.innerHTML = `
     
     .price-card.popular {
         transform: translateY(20px);
+    }
+    
+    @media (max-width: 768px) {
+        body.menu-open {
+            overflow: hidden;
+        }
     }
 `;
 document.head.appendChild(style); 
