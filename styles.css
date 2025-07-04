@@ -8,7 +8,9 @@
     --dark-grey: #666666;
     --border-radius: 4px;
     --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    --box-shadow-hover: 0 10px 30px rgba(241, 98, 45, 0.2);
     --transition: all 0.3s ease;
+    --transition-long: all 0.5s ease;
 }
 
 * {
@@ -104,20 +106,22 @@ section {
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
-    transform: translateY(-3px);
-    box-shadow: var(--box-shadow);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .btn-secondary {
     background-color: transparent;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
+    transition: var(--transition), color 0.3s ease, background-color 0.3s ease; /* Добавляем явный transition для цвета */
 }
 
 .btn-secondary:hover {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
-    transform: translateY(-3px);
+    color: var(--secondary-color); /* Явно указываем цвет текста при ховере */
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .btn-large {
@@ -243,8 +247,9 @@ nav {
 .hero-logo {
     margin-bottom: 3rem;
     max-width: 70%;
-    animation: pulse 2s infinite;
+    /* animation: pulse 2s infinite; */ /* Убираем старую анимацию */
     filter: drop-shadow(0 0 30px rgba(241, 98, 45, 0.6));
+    animation: subtle-pulse 3s infinite ease-in-out; /* Применяем новую анимацию */
 }
 
 .hero-logo svg {
@@ -258,8 +263,8 @@ nav {
     font-size: 40px;
 }
 
-@keyframes pulse {
-    0% {
+/* @keyframes pulse { */ /* Комментируем или удаляем старую анимацию */
+    /* 0% {
         filter: drop-shadow(0 0 30px rgba(241, 98, 45, 0.5));
     }
     50% {
@@ -267,6 +272,22 @@ nav {
     }
     100% {
         filter: drop-shadow(0 0 30px rgba(241, 98, 45, 0.5));
+    } */
+/* } */
+
+/* Новая, более плавная анимация пульсации */
+@keyframes subtle-pulse {
+    0% {
+        filter: drop-shadow(0 0 20px rgba(241, 98, 45, 0.4));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(241, 98, 45, 0.7));
+        transform: scale(1.03);
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(241, 98, 45, 0.4));
+        transform: scale(1);
     }
 }
 
@@ -315,8 +336,8 @@ nav {
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(241, 98, 45, 0.15);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: var(--box-shadow-hover);
     border: 1px solid var(--primary-color);
 }
 
@@ -359,13 +380,19 @@ nav {
 }
 
 .price-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.03);
     border-color: var(--primary-color);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .price-card.popular {
     border-color: var(--primary-color);
-    transform: translateY(-10px) scale(1.05);
+    /* Убираем transform отсюда, чтобы он не конфликтовал с hover и анимацией появления */
+}
+
+.price-card.popular:hover {
+    transform: translateY(-15px) scale(1.08); /* Более выраженный эффект для популярной карточки */
+    box-shadow: 0 20px 40px rgba(241, 98, 45, 0.3);
 }
 
 .popular-tag {
@@ -460,8 +487,9 @@ nav {
 }
 
 .advantage-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.03);
     border-color: var(--primary-color);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .advantage-icon {
@@ -514,6 +542,13 @@ nav {
     box-shadow: var(--box-shadow);
     text-align: left;
     border: 1px solid #333;
+    transition: var(--transition-long); /* Используем более длинный transition */
+}
+
+.review-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--box-shadow-hover);
+    border-color: var(--primary-color);
 }
 
 .review-header {
@@ -574,6 +609,50 @@ nav {
 .contact {
     text-align: center;
     background-color: var(--light-color);
+}
+
+/* Investment Section */
+.investment {
+    background-color: var(--secondary-color); /* Или var(--light-color) для чередования */
+    text-align: center;
+    padding: 100px 0;
+}
+
+.investment h2 {
+    margin-bottom: 3rem; /* Больше отступ для заголовка */
+}
+
+.investment-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--light-color); /* Фон для контентного блока */
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid #333;
+}
+
+.investment-content p {
+    color: #CCC;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.investment-content .btn-primary {
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .investment {
+        padding: 50px 0;
+    }
+    .investment-content {
+        padding: 2rem;
+    }
+    .investment-content p {
+        font-size: 1rem;
+    }
 }
 
 .contact-content {
@@ -914,12 +993,21 @@ footer {
 } 
 
 /* Улучшенная анимация появления элементов */
-.service-card, .advantage-card, .price-card, .review-card, .hero-logo, .hero h1, .hero .tagline, .hero-buttons > a {
+.service-card, .advantage-card, .price-card, .review-card,
+.hero-logo, .hero h1, .hero .tagline, .hero-buttons > a,
+.services h2, .pricing h2, .advantages h2, .reviews h2, .investment h2, .investment-content,
+.contact h2, .contact-item, .footer-logo, .footer-links a {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(30px) scale(0.95); /* Начальное состояние: немного уменьшены и сдвинуты */
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+/* Стили для уже анимированных элементов (если нужны специфичные стили после анимации) */
+.animated {
+    /* Можно добавить стили сюда, если нужно, например, для предотвращения повторной анимации */
+}
+
+/* Убираем начальный transform для .price-card.popular, так как он управляется JS и hover */
 .price-card.popular {
-    transform: translateY(30px);
+     /* transform: translateY(30px); */ /* Это правило теперь не нужно здесь */
 }

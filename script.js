@@ -141,20 +141,34 @@ const addTouchEventsForSliders = () => {
 
 // Animate elements when they come into view
 const animateOnScroll = () => {
-    // Расширяем список элементов для анимации
-    const elements = document.querySelectorAll('.service-card, .advantage-card, .price-card, .review-card, .hero-logo, .hero h1, .hero .tagline, .hero-buttons > a, .services h2, .pricing h2, .advantages h2, .reviews h2, .contact h2, .contact-item, .footer-logo, .footer-links a');
+    // Расширяем список элементов для анимации, добавляем новый раздел
+    const elements = document.querySelectorAll(
+        '.service-card, .advantage-card, .price-card, .review-card, ' +
+        '.hero-logo, .hero h1, .hero .tagline, .hero-buttons > a, ' +
+        '.services h2, .pricing h2, .advantages h2, .reviews h2, .investment h2, .investment-content, ' +
+        '.contact h2, .contact-item, .footer-logo, .footer-links a'
+    );
     
     elements.forEach((element, index) => {
+        // Проверяем, не был ли элемент уже анимирован
+        if (element.classList.contains('animated')) {
+            return;
+        }
+
         const elementPosition = element.getBoundingClientRect().top;
         const screenPosition = window.innerHeight / 1.2; // Порог срабатывания анимации
         
         if (elementPosition < screenPosition) {
             // Добавляем небольшую задержку для каждого элемента для каскадного эффекта
-            const delay = element.closest('.hero-buttons') || element.closest('.footer-links') ? 0 : Math.min(index * 100, 500); 
+            // Увеличиваем базовую задержку и максимальную для более выраженного эффекта
+            const delayFactor = element.closest('.hero-buttons') || element.closest('.footer-links') ? 0.05 : 0.15;
+            const maxDelay = 700; // Максимальная задержка увеличена
+            const delay = Math.min(index * (delayFactor * 1000), maxDelay);
+
             setTimeout(() => {
                 element.style.opacity = '1';
-                // Убираем scale(1.05) для .price-card.popular из JS, так как оно теперь в CSS hover
-                element.style.transform = 'translateY(0)'; 
+                element.style.transform = 'translateY(0) scale(1)'; // Добавляем scale(1) для сброса, если был scale в transform
+                element.classList.add('animated'); // Помечаем элемент как анимированный
             }, delay);
         }
     });
@@ -162,6 +176,7 @@ const animateOnScroll = () => {
 
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', () => {
+    // Запускаем animateOnScroll сразу при загрузке, чтобы анимировать видимые элементы
     animateOnScroll();
     addTouchEventsForSliders();
     // Запускаем эффект пишущей машинки при загрузке
