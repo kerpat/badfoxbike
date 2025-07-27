@@ -521,21 +521,14 @@ nav {
 }
 
 .reviews-slider {
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin: 3rem 0 1.5rem;
     padding: 1rem 0.5rem;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.reviews-slider::-webkit-scrollbar {
-    display: none;
 }
 
 .review-card {
-    min-width: 350px;
     background-color: var(--light-color);
     padding: 2rem;
     border-radius: var(--border-radius);
