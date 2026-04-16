@@ -10,39 +10,25 @@ export const SERVICES: ServiceItem[] = [
   },
   {
     icon: <Zap className="w-12 h-12 text-primary" />,
-    title: "Kugoo и Wenbox",
+    title: "Wenbox",
     description: "Современные и мощные электровелосипеды для комфортной работы"
   }
 ];
 
 export const PRICING: PricingItem[] = [
   {
-    title: "Kugoo",
-    period: "Неделя",
-    price: "3 500 ₽",
-    features: ["Модель Kugoo", "Без IoT, без ограничения скорости", "1 АКБ в комплекте"],
-    link: "https://t.me/badfoxbikebot"
-  },
-  {
-    title: "Kugoo",
+    title: "Wenbox U5",
     period: "Месяц",
     price: "13 000 ₽",
-    features: ["Модель Kugoo", "Без IoT, без ограничения скорости", "1 АКБ в комплекте"],
+    features: ["Модель Wenbox U5", "Без IoT, без ограничения скорости", "1 АКБ 60/45 в комплекте"],
     isPopular: true,
     link: "https://t.me/badfoxbikebot"
   },
   {
-    title: "Wendox",
+    title: "Wenbox U5",
     period: "Неделя",
     price: "5 000 ₽",
-    features: ["Модель Wendox", "С IoT, ограничение 25 км/ч", "1 АКБ в комплекте"],
-    link: "https://t.me/badfoxbikebot"
-  },
-  {
-    title: "Wendox",
-    period: "Месяц",
-    price: "19 000 ₽",
-    features: ["Модель Wendox (Wenbox)", "С IoT, ограничение 25 км/ч", "1 АКБ в комплекте"],
+    features: ["Модель Wenbox U5", "С IoT, ограничение 25 км/ч", "1 АКБ 60/45 в комплекте"],
     link: "https://t.me/badfoxbikebot"
   }
 ];

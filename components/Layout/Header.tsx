@@ -32,11 +32,12 @@ export const Header: React.FC = () => {
     }
   };
 
-  const navItems = [
+  const navItems: { label: string; hash?: string; href?: string }[] = [
     { label: 'Услуги', hash: 'services' },
     { label: 'Преимущества', hash: 'advantages' },
     { label: 'Отзывы', hash: 'reviews' },
     { label: 'Инвестирование', hash: 'investment' },
+    { label: 'Регистрация', href: 'https://badfoxbike.xn----7sbudcwsigrzv.space/registration.html' },
   ];
 
   return (
@@ -56,13 +57,25 @@ export const Header: React.FC = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8 bg-black/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/5">
             {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleNavClick(item.hash)}
-                className="text-gray-300 hover:text-white font-medium uppercase text-xs tracking-widest transition-all hover:scale-105"
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-white font-bold uppercase text-xs tracking-widest transition-all hover:scale-105"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.hash!)}
+                  className="text-gray-300 hover:text-white font-medium uppercase text-xs tracking-widest transition-all hover:scale-105"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </div>
 
@@ -95,13 +108,26 @@ export const Header: React.FC = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
 
         {navItems.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => handleNavClick(item.hash)}
-            className="text-white text-2xl uppercase font-black tracking-tighter hover:text-primary transition-colors relative z-10"
-          >
-            {item.label}
-          </button>
+          item.href ? (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="text-primary text-2xl uppercase font-black tracking-tighter hover:text-white transition-colors relative z-10"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <button
+              key={item.label}
+              onClick={() => handleNavClick(item.hash!)}
+              className="text-white text-2xl uppercase font-black tracking-tighter hover:text-primary transition-colors relative z-10"
+            >
+              {item.label}
+            </button>
+          )
         ))}
         <button
           onClick={() => handleNavClick('contact')}

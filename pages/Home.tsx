@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Send, Bike, ChevronRight, ChevronLeft, Star, Phone, MapPin, ExternalLink, Battery, Check } from 'lucide-react';
 import { SERVICES, PRICING, ADVANTAGES, REVIEWS } from '../constants';
 import { FadeIn } from '../components/UI/FadeIn';
@@ -15,19 +15,6 @@ const AmbientBackground = () => (
 
 // --- Hero Section ---
 const Hero = () => {
-  const [text, setText] = useState('');
-  const fullText = "Новые электровелосипеды! (весна 2025 г.)";
-
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      setText(fullText.substring(0, index));
-      index++;
-      if (index > fullText.length) clearInterval(timer);
-    }, 70);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
       {/* Dynamic Background */}
@@ -50,17 +37,7 @@ const Hero = () => {
           </h1>
         </FadeIn>
 
-        <FadeIn delay={0.4} className="w-full flex justify-center relative z-20">
-          {/* Fixed height container to prevent layout shift */}
-          <div className="inline-flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-6 py-2 mb-12 min-h-[50px] min-w-[300px] md:min-w-[450px]">
-              <p className="text-base md:text-xl text-primary font-mono font-bold tracking-wide whitespace-nowrap">
-                {text}
-                <span className="animate-pulse text-white">_</span>
-              </p>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.6} className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full max-w-lg mx-auto relative z-20">
+        <FadeIn delay={0.6} className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full max-w-lg mx-auto mt-8 relative z-20">
           <a 
             href="https://t.me/badfoxbikebot" 
             target="_blank"
@@ -135,7 +112,7 @@ const Pricing = () => (
         <p className="text-gray-400 mt-4 text-lg">Прозрачные условия без скрытых платежей</p>
       </FadeIn>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+      <div className="grid md:grid-cols-2 gap-6 items-start max-w-3xl mx-auto">
         {PRICING.map((plan, idx) => (
           <FadeIn key={idx} delay={idx * 0.1} className={`relative group h-full ${plan.isPopular ? 'lg:transform lg:scale-105 z-20' : 'z-10'}`}>
             {plan.isPopular && (
@@ -188,7 +165,7 @@ const Pricing = () => (
            <div className="bg-zinc-800 p-2 rounded-full text-primary group-hover:scale-110 transition-transform">
              <Battery size={24} />
            </div>
-           <span className="text-sm md:text-base">Дополнительный АКБ: <span className="text-white font-bold text-lg mx-1">1 000 ₽</span> / неделя</span>
+           <span className="text-sm md:text-base">Дополнительный АКБ: <span className="text-white font-bold text-lg mx-1">1 500 ₽</span> / неделя</span>
         </div>
       </FadeIn>
     </div>
@@ -294,25 +271,15 @@ const Investment = () => (
                 <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50">
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
                     
-                    <div className="grid md:grid-cols-2 gap-10 p-8 md:p-16 relative z-10 items-center">
-                        <div className="text-left">
-                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase mb-6 leading-tight">Инвестирование <br/><span className="text-primary">и выкуп</span></h2>
-                            <p className="text-gray-400 text-lg mb-8 leading-relaxed max-w-lg">
-                                Мы активно развиваемся и ищем партнеров. Если вы заинтересованы в инвестировании в перспективный бизнес или хотите обсудить условия выкупа, мы открыты к диалогу.
-                            </p>
-                            <a href="https://t.me/BFbike" target="_blank" rel="noreferrer" className="btn-primary inline-flex">
-                                <Send size={18} />
-                                <span>Обсудить условия</span>
-                            </a>
-                        </div>
-                        <div className="glass p-8 rounded-2xl border-l-4 border-primary h-full flex flex-col justify-center">
-                            <p className="text-white text-xl font-bold mb-4 flex items-center gap-2">
-                                <span>📢</span> Анонс
-                            </p>
-                            <p className="text-gray-300">
-                                Подробная информация об условиях инвестирования и программах выкупа электровелосипедов будет опубликована в ближайшее время. Следите за обновлениями на сайте и в нашем Telegram-канале!
-                            </p>
-                        </div>
+                    <div className="p-8 md:p-16 relative z-10 text-center max-w-3xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-black text-white uppercase mb-6 leading-tight">Инвестирование</h2>
+                        <p className="text-gray-400 text-lg mb-8 leading-relaxed max-w-lg mx-auto">
+                            Мы активно развиваемся и ищем партнеров. Если вы заинтересованы в инвестировании в перспективный бизнес, мы открыты к диалогу.
+                        </p>
+                        <a href="https://t.me/BFbike" target="_blank" rel="noreferrer" className="btn-primary inline-flex">
+                            <Send size={18} />
+                            <span>Обсудить условия</span>
+                        </a>
                     </div>
                 </div>
             </FadeIn>
